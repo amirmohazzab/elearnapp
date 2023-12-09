@@ -11,15 +11,15 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
 
     return ( 
         <Screen style={styles.container}>
           <Image style={styles.logo} source={require('../assets/logo.png')}/>
           <BestlearnForm
             initialValues={{email: "", password: ""}}
-            onSubmit={values => console.log(values)}
-            validationSchema={validationSchema}
+            onSubmit={() => navigation.navigate('Home')}
+            // validationSchema={validationSchema}
           >
                     <BestlearnFormField
                       placeholder='Email'

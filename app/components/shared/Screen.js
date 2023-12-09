@@ -9,7 +9,7 @@ export default Screen;
 
 const styles = StyleSheet.create({
     screen: {
-        paddingTop: 20,
+        paddingTop: 0,
         flex: 1,
     },
 });

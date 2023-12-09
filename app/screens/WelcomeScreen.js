@@ -1,6 +1,7 @@
 import React from 'react'
-import {View, ImageBackground, StyleSheet, Text} from 'react-native'
+import {View, ImageBackground, StyleSheet} from 'react-native'
 import CustomButton from '../components/shared/CustomButton';
+import BestlearnText from '../components/shared/BestlearnText';
 
 
 const WelcomeScreen = ({navigation}) => {
@@ -11,9 +12,9 @@ const WelcomeScreen = ({navigation}) => {
             blurRadius={3}
         >
             <View style={styles.textContainer}>
-              <Text style={styles.firstText}>
+              <BestlearnText size='3' style={styles.firstText}>
                 Self learning, Experience, Enter job market
-              </Text>
+              </BestlearnText>
             </View>
             <View style={styles.buttonContainer}>
                 <CustomButton title='Enter'color="royalblue" onPress={()=> navigation.navigate('Login')}/>
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
   },
   firstText: {
     fontWeight: "bold",
-    fontSize: 30,
     top: 25,
     color: "tomato",
     textAlign: "center"
