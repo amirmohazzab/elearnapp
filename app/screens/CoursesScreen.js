@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet} from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity} from 'react-native'
 import Screen from './../components/shared/Screen';
 import Card from '../components/shared/Card';
 
@@ -9,18 +9,20 @@ const courses = [
     {id: 3, title: 'NodeJS', price: 400, image: require('../assets/photos/nodejs.png')},
     {id: 4, title: 'ElectronJS', price: 500, image: require('../assets/photos/electronjs.jpg')}
 ]
-const CoursesScreen = () => {
+const CoursesScreen = ({navigation}) => {
     return ( 
         <Screen style={styles.container}>
             <FlatList 
                 data={courses}
                 keyExtractor={course => course.id.toString()}
                 renderItem={({item}) => (
-                    <Card 
-                        title={item.title}
-                        price={item.price}
-                        image={item.image}
-                    />
+                    <TouchableOpacity onPress={() => navigation.navigate('CourseDetail', {course: item})}> 
+                        <Card 
+                            title={item.title}
+                            price={item.price}
+                            image={item.image}
+                        />
+                    </TouchableOpacity>
                 )}
             />
         </Screen>

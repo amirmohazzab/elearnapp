@@ -23,7 +23,7 @@ const TopTabNavigator = ({navigation}) => {
                         tabBarStyle: {backgroundColor: '#F8F4F4'}
                     }} 
                 >
-                    <TopTab.Screen name="Courses" component={CoursesScreen} options={{tabBarLabel: "All Courses"}} />
+                    <TopTab.Screen name="AllCourses" component={CoursesScreen} options={{tabBarLabel: "All Courses"}} />
                     <TopTab.Screen name="Archive" component={ArchiveScreen}  />
                 </TopTab.Navigator>
             </Screen>    

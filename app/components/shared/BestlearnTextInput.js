@@ -1,20 +1,20 @@
 import React from 'react'
 import {View, TextInput, StyleSheet} from 'react-native'
-//import {MaterialCommiunityIcons} from 'react-native-vector-icons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const BestlearnTextInput = ({icon, ...otherProps}) => {
     return ( 
         <View style={styles.container}>
             <TextInput style={styles.text} {...otherProps} />
-            {/* {icon && 
-                <MaterialCommiunityIcons 
+            {icon && 
+                <MaterialCommunityIcons 
                     name={icon}
                     size={20}
                     color='#6e6969'
                     style={styles.icon}
                 />
-            } */}
+            }
         </View> 
     );
 }
