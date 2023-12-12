@@ -1,16 +1,16 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-//import {Ionicons} from 'react-native-vector-icons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
 const Icon = ({name, size=40, backgroundColor="#fff", iconColor="fff"}) => {
     return ( 
         <View style={styles.container}>
-            {/* <Ionicons 
+            <Ionicons 
                 name={name}
                 color={iconColor}
                 size={size}
-            /> */}
+            />
         </View>
      );
 }

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {View, StyleSheet, Image} from 'react-native'
 import * as Yup from 'yup'
 import {BestlearnFormField, BestlearnForm, SubmitButton} from '../components/forms';
 import Screen from '../components/shared/Screen'
+import { loginUser } from '../services/user';
+import { customToast, loadingToast, successToast } from '../utils/toast';
+import Toast from 'react-native-tiny-toast';
 
 
 const validationSchema = Yup.object().shape({
@@ -11,21 +14,47 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({navigation, route}) => {
+
+  useEffect(()=> {
+    if (route.params.successRegister === true)
+      successToast('Registration successful')
+  }, [])
+
+  const handleUserLogin = async (user) => {
+    try {
+      loadingToast('Connection...')
+      const data = await loginUser(user);
+      if (data.data.status === 200) {
+        Toast.hide();
+        successToast("Login was successful"); 
+      
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}]
+        })
+      } else {
+        Toast.hide();
+        customToast('Email or Password are wrong')
+      }
+    } catch (err) {
+      Toast.hide();
+    }
+}
 
     return ( 
         <Screen style={styles.container}>
           <Image style={styles.logo} source={require('../assets/logo.png')}/>
           <BestlearnForm
             initialValues={{email: "", password: ""}}
-            onSubmit={() => navigation.navigate('Home')}
-            // validationSchema={validationSchema}
+            onSubmit={user => handleUserLogin(user)}
+            validationSchema={validationSchema}
           >
                     <BestlearnFormField
                       placeholder='Email'
                       autoCompleteType="email"
                       autoCorrect={false}
-                      keyboardType='email-address'
+                      inputMode='email'
                       icon='email'
                       name='email'
                       placeholderTextColor="royalblue"
@@ -35,7 +64,6 @@ const LoginScreen = ({navigation}) => {
                       placeholder='Password'
                       autoCompleteType="password"
                       autoCorrect={false}
-                      keyboardType='password'
                       icon='onepassword'
                       name='password'
                       placeholderTextColor="royalblue"

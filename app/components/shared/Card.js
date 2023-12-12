@@ -7,12 +7,11 @@ import BestlearnText from './BestlearnText';
 const Card = ({title, price, image, courseInfo=null}) => {
     return ( 
         <View style={styles.card}>
-            <Image resizeMode='contain' source={image} style={styles.courseImage}/>
+            <Image resizeMode='contain' source={{uri: `https://elearnappapi.ahmohazzab.com/${image}`}} style={styles.courseImage}/>
             <View style={{padding: 20}}>
                 <Text style={styles.title}> {title} </Text>
                 <View style={styles.courseDetails}> 
-                    <Text style={{color: 'black'}}> {price} </Text> 
-                    <Text style={{color: 'black'}}> {price} </Text> 
+                    <Text style={{color: 'black'}}> {price === 0 ? "Free" : price} </Text> 
                 </View>
             </View>
             {courseInfo ? (

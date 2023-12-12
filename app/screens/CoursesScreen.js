@@ -1,26 +1,27 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { FlatList, StyleSheet, TouchableOpacity} from 'react-native'
 import Screen from './../components/shared/Screen';
 import Card from '../components/shared/Card';
+import BestlearnContext from '../context/BestlearnContext';
 
-const courses = [
-    {id: 1, title: 'ReactJS', price: 200, image: require('../assets/photos/reactjs.png')},
-    {id: 2, title: 'ReactNative', price: 300, image: require('../assets/photos/reactnative.png')},
-    {id: 3, title: 'NodeJS', price: 400, image: require('../assets/photos/nodejs.png')},
-    {id: 4, title: 'ElectronJS', price: 500, image: require('../assets/photos/electronjs.jpg')}
-]
+
+
 const CoursesScreen = ({navigation}) => {
+
+    const {courses, loading} = useContext(BestlearnContext)
+
     return ( 
         <Screen style={styles.container}>
             <FlatList 
                 data={courses}
-                keyExtractor={course => course.id.toString()}
+                keyExtractor={course => course._id.toString()}
                 renderItem={({item}) => (
                     <TouchableOpacity onPress={() => navigation.navigate('CourseDetail', {course: item})}> 
                         <Card 
+                            _id = {item._id}
                             title={item.title}
                             price={item.price}
-                            image={item.image}
+                            image={item.imageUrl}
                         />
                     </TouchableOpacity>
                 )}

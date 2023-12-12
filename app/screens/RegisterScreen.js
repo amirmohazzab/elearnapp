@@ -1,8 +1,11 @@
 import React from 'react'
 import {View, StyleSheet, Image} from 'react-native'
+import Toast from 'react-native-tiny-toast'
 import * as Yup from 'yup'
 import {BestlearnFormField, BestlearnForm, SubmitButton} from '../components/forms'
 import Screen from '../components/shared/Screen';
+import { registerUser } from '../services/user';
+import { customToast, loadingToast } from '../utils/toast';
 
 
 
@@ -15,14 +18,32 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const RegisterScreen = () => {
+const RegisterScreen = ({navigation}) => {
+
+    const handleUserRegisteration = async (user) => {
+        try {
+          loadingToast('User registering...');
+          const data = await registerUser(user);
+          console.log(data);
+          if (data.data.status === 201) {
+            Toast.hide();
+            navigation.navigate('Login', {successRegister: true})
+          } else {
+            Toast.hide();
+            customToast('Error happened')
+          }
+        } catch (err) {
+          console.log(err)
+          Toast.hide();
+        }
+    }
 
     return ( 
         <Screen style={styles.container}>
           <Image style={styles.logo} source={require('../assets/logo.png')}/>
           <BestlearnForm
             initialValues={{fullname: "", email: "", password: "", confirmationPassword: ""}}
-            onSubmit={values => console.log(values)}
+            onSubmit={user => {console.log(user); handleUserRegisteration(user)}}
             validationSchema={validationSchema}
           >
                   <BestlearnFormField
@@ -37,7 +58,7 @@ const RegisterScreen = () => {
                     placeholder='Email'
                     autoCompleteType="email"
                     autoCorrect={false}
-                    keyboardType='email-address'
+                    inputMode='email'
                     icon='email'
                     name='email'
                     placeholderTextColor="royalblue"
@@ -46,7 +67,6 @@ const RegisterScreen = () => {
                   <BestlearnFormField
                     placeholder='Password'
                     autoCorrect={false}
-                    keyboardType='password'
                     icon='onepassword'
                     name='password'
                     placeholderTextColor="royalblue"
@@ -55,7 +75,6 @@ const RegisterScreen = () => {
                   <BestlearnFormField
                     placeholder='Password Repeat'
                     autoCorrect={false}
-                    keyboardType='password'
                     icon='onepassword'
                     name='confirmationPassword'
                     placeholderTextColor="royalblue"

@@ -1,12 +1,21 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image, TouchableHighlight, TouchableOpacity} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StackActions } from '@react-navigation/native';
 import Screen from './../components/shared/Screen';
 import ItemSeparator from '../components/shared/ItemSeparator';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Materialicon from 'react-native-vector-icons/MaterialIcons';
 
 
-const AccountScreen = () => {
+const AccountScreen = ({navigation}) => {
+
+    const handleLogout = async () => {
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('userId');
+      navigation.dispatch(StackActions.replace('Welcome'))
+    };
+
     return ( 
         <Screen style={styles.screen}>
             <View style={styles.container}>
@@ -20,7 +29,7 @@ const AccountScreen = () => {
                 </TouchableOpacity>
             </View>
             <ItemSeparator height={3}/>
-            <TouchableOpacity underlayColor='#f8f4f4' onPress={()=> {}} >
+            <TouchableOpacity underlayColor='#f8f4f4' onPress={handleLogout} >
                 <View style={[styles.container, {flexDirection: "row-reverse"}]}>
                     <Materialicon name="logout" size={32} color="tomato"  />  
                     <View style={styles.subTitle}>
